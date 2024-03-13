@@ -168,11 +168,11 @@ fn debug_render_axes(
             } else {
                 [1.0; 4]
             };
-            let [x_color, y_color, _z_color, center_color] = [
-                Color::hsla(0.0, 1.0 * mul[1], 0.5 * mul[2], 1.0 * mul[3]),
-                Color::hsla(120.0 * mul[0], 1.0 * mul[1], 0.4 * mul[2], 1.0 * mul[3]),
-                Color::hsla(220.0 * mul[0], 1.0 * mul[1], 0.6 * mul[2], 1.0 * mul[3]),
-                Color::hsla(60.0 * mul[0], 1.0 * mul[1], 0.5 * mul[2], 1.0 * mul[3]),
+            let [x_color, y_color, _z_color, center_color]: [Color; 4] = [
+                Hsla::new(0.0, 1.0 * mul[1], 0.5 * mul[2], 1.0 * mul[3]).into(),
+                Hsla::new(120.0 * mul[0], 1.0 * mul[1], 0.4 * mul[2], 1.0 * mul[3]).into(),
+                Hsla::new(220.0 * mul[0], 1.0 * mul[1], 0.6 * mul[2], 1.0 * mul[3]).into(),
+                Hsla::new(60.0 * mul[0], 1.0 * mul[1], 0.5 * mul[2], 1.0 * mul[3]).into(),
             ];
             let global_com = pos.0 + rot.rotate(local_com.0);
 
@@ -231,7 +231,7 @@ fn debug_render_aabbs(
                 if let Some(mul) = render_config.map_or(config.sleeping_color_multiplier, |c| {
                     c.sleeping_color_multiplier
                 }) {
-                    color = Color::hsla(h * mul[0], s * mul[1], l * mul[2], a * mul[3]);
+                    color = Hsla::new(h * mul[0], s * mul[1], l * mul[2], a * mul[3]).into();
                 }
             }
 
@@ -250,7 +250,8 @@ fn debug_render_aabbs(
 
             // If the body is sleeping, multiply the color by the sleeping color multiplier
             if sleeping.contains(collider_parent) {
-                let [h, s, l, a] = color.as_hsla_f32();
+                let hsla = Hsla::from(color);
+                let [h, s, l, a] = [hsla.hue, hsla.saturation, hsla.lightness, hsla.alpha];
                 if let Some(mul) = render_config.map_or(config.sleeping_color_multiplier, |c| {
                     c.sleeping_color_multiplier
                 }) {
@@ -292,7 +293,8 @@ fn debug_render_colliders(
 
             // If the body is sleeping, multiply the color by the sleeping color multiplier
             if sleeping.contains(collider_parent) {
-                let [h, s, l, a] = color.as_hsla_f32();
+                let hsla = Hsla::from(color);
+                let [h, s, l, a] = [hsla.hue, hsla.saturation, hsla.lightness, hsla.alpha];
                 if let Some(mul) = render_config.map_or(config.sleeping_color_multiplier, |c| {
                     c.sleeping_color_multiplier
                 }) {
@@ -354,8 +356,8 @@ fn debug_render_contacts(
                 // Draw contact normals
                 if let Some(color) = config.contact_normal_color {
                     // Use dimmer color for second normal
-                    let mut color_dim = color.as_hsla();
-                    color_dim.set_l(color_dim.l() * 0.5);
+                    let mut color_dim = Hsla::from(color);
+                    color_dim.lightness = color_dim.lightness * 0.5;
 
                     // The length of the normal arrows
                     let length = match config.contact_normal_scale {
@@ -375,7 +377,7 @@ fn debug_render_contacts(
                     #[cfg(feature = "3d")]
                     {
                         gizmos.draw_arrow(p1, p1 + normal1 * length, 0.1, color);
-                        gizmos.draw_arrow(p2, p2 + normal2 * length, 0.1, color_dim);
+                        gizmos.draw_arrow(p2, p2 + normal2 * length, 0.1, color_dim.into());
                     }
                 }
             }
@@ -397,7 +399,8 @@ fn debug_render_joints<T: Joint>(
             if let Some(mut anchor_color) = config.joint_anchor_color {
                 // If both bodies are sleeping, multiply the color by the sleeping color multiplier
                 if sleeping1 && sleeping2 {
-                    let [h, s, l, a] = anchor_color.as_hsla_f32();
+                    let hsla = Hsla::from(anchor_color);
+                    let [h, s, l, a] = [hsla.hue, hsla.saturation, hsla.lightness, hsla.alpha];
                     if let Some(mul) = render_config.map_or(config.sleeping_color_multiplier, |c| {
                         c.sleeping_color_multiplier
                     }) {
@@ -419,7 +422,8 @@ fn debug_render_joints<T: Joint>(
             if let Some(mut separation_color) = config.joint_separation_color {
                 // If both bodies are sleeping, multiply the color by the sleeping color multiplier
                 if sleeping1 && sleeping2 {
-                    let [h, s, l, a] = separation_color.as_hsla_f32();
+                    let hsla = Hsla::from(separation_color);
+                    let [h, s, l, a] = [hsla.hue, hsla.saturation, hsla.lightness, hsla.alpha];
                     if let Some(mul) = render_config.map_or(config.sleeping_color_multiplier, |c| {
                         c.sleeping_color_multiplier
                     }) {

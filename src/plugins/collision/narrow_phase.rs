@@ -182,7 +182,7 @@ pub fn collect_collisions<C: AnyCollider>(
         // TODO: Verify if `par_splat_map` is deterministic. If not, sort the collisions.
         let new_collisions = broad_collision_pairs
             .iter()
-            .par_splat_map(pool, None, |chunks| {
+            .par_splat_map(pool, None, |_, chunks| {
                 let mut new_collisions: Vec<Contacts> = vec![];
                 for &(entity1, entity2) in chunks {
                     process_collision_pair(

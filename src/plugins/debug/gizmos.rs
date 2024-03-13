@@ -578,7 +578,12 @@ impl<'w, 's> PhysicsGizmoExt for Gizmos<'w, 's, PhysicsGizmos> {
                 shape,
                 origin + hit.time_of_impact * direction.adjust_precision(),
                 shape_rotation,
-                Color::rgba(shape_color.r(), shape_color.g(), shape_color.b(), 0.3),
+                Color::rgba(
+                    shape_color.linear().red,
+                    shape_color.linear().green,
+                    shape_color.linear().blue,
+                    0.3,
+                ),
             );
         }
     }

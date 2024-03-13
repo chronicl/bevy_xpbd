@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use bevy::prelude::*;
+use bevy::{color::palettes, prelude::*};
 
 /// Gizmos used for debug rendering physics. See [`PhysicsDebugPlugin`]
 ///
@@ -91,20 +91,20 @@ impl Default for PhysicsGizmos {
             #[cfg(feature = "3d")]
             axis_lengths: Some(Vector::new(0.5, 0.5, 0.5)),
             aabb_color: None,
-            collider_color: Some(Color::ORANGE),
+            collider_color: Some(palettes::css::ORANGE.into()),
             sleeping_color_multiplier: Some([1.0, 1.0, 0.4, 1.0]),
             contact_point_color: None,
             contact_normal_color: None,
             contact_normal_scale: ContactGizmoScale::default(),
-            joint_anchor_color: Some(Color::PINK),
-            joint_separation_color: Some(Color::RED),
-            raycast_color: Some(Color::RED),
-            raycast_point_color: Some(Color::YELLOW),
-            raycast_normal_color: Some(Color::PINK),
-            shapecast_color: Some(Color::RED),
-            shapecast_shape_color: Some(Color::rgb(0.4, 0.6, 1.0)),
-            shapecast_point_color: Some(Color::YELLOW),
-            shapecast_normal_color: Some(Color::PINK),
+            joint_anchor_color: Some(palettes::css::PINK.into()),
+            joint_separation_color: Some(palettes::css::RED.into()),
+            raycast_color: Some(palettes::css::RED.into()),
+            raycast_point_color: Some(palettes::css::YELLOW.into()),
+            raycast_normal_color: Some(palettes::css::PINK.into()),
+            shapecast_color: Some(palettes::css::RED.into()),
+            shapecast_shape_color: Some(Srgba::new(0.4, 0.6, 1.0, 1.0).into()),
+            shapecast_point_color: Some(palettes::css::YELLOW.into()),
+            shapecast_normal_color: Some(palettes::css::PINK.into()),
             hide_meshes: false,
         }
     }
@@ -134,21 +134,21 @@ impl PhysicsGizmos {
             axis_lengths: Some(Vector::new(5.0, 5.0)),
             #[cfg(feature = "3d")]
             axis_lengths: Some(Vector::new(0.5, 0.5, 0.5)),
-            aabb_color: Some(Color::rgb(0.8, 0.8, 0.8)),
-            collider_color: Some(Color::ORANGE),
+            aabb_color: Some(Srgba::rgb(0.8, 0.8, 0.8).into()),
+            collider_color: Some(palettes::css::ORANGE.into()),
             sleeping_color_multiplier: Some([1.0, 1.0, 0.4, 1.0]),
-            contact_point_color: Some(Color::CYAN),
-            contact_normal_color: Some(Color::RED),
+            contact_point_color: Some(palettes::css::DARK_CYAN.into()),
+            contact_normal_color: Some(palettes::css::RED.into()),
             contact_normal_scale: ContactGizmoScale::default(),
-            joint_anchor_color: Some(Color::PINK),
-            joint_separation_color: Some(Color::RED),
-            raycast_color: Some(Color::RED),
-            raycast_point_color: Some(Color::YELLOW),
-            raycast_normal_color: Some(Color::PINK),
-            shapecast_color: Some(Color::RED),
-            shapecast_shape_color: Some(Color::rgb(0.4, 0.6, 1.0)),
-            shapecast_point_color: Some(Color::YELLOW),
-            shapecast_normal_color: Some(Color::PINK),
+            joint_anchor_color: Some(palettes::css::PINK.into()),
+            joint_separation_color: Some(Srgba::RED.into()),
+            raycast_color: Some(Srgba::RED.into()),
+            raycast_point_color: Some(palettes::css::YELLOW.into()),
+            raycast_normal_color: Some(palettes::css::PINK.into()),
+            shapecast_color: Some(palettes::css::RED.into()),
+            shapecast_shape_color: Some(Srgba::rgb(0.4, 0.6, 1.0).into()),
+            shapecast_point_color: Some(palettes::css::YELLOW.into()),
+            shapecast_normal_color: Some(palettes::css::PINK.into()),
             hide_meshes: true,
         }
     }
@@ -431,7 +431,7 @@ impl Default for DebugRender {
             #[cfg(feature = "3d")]
             axis_lengths: Some(Vector::new(0.5, 0.5, 0.5)),
             aabb_color: None,
-            collider_color: Some(Color::ORANGE),
+            collider_color: Some(Srgba::rgb_u8(255, 127, 80).into()),
             sleeping_color_multiplier: Some([1.0, 1.0, 0.4, 1.0]),
             hide_mesh: false,
         }
@@ -447,7 +447,7 @@ impl DebugRender {
             #[cfg(feature = "3d")]
             axis_lengths: Some(Vector::new(0.5, 0.5, 0.5)),
             aabb_color: Some(Color::rgb(0.8, 0.8, 0.8)),
-            collider_color: Some(Color::ORANGE),
+            collider_color: Some(Srgba::rgb_u8(255, 127, 80).into()),
             sleeping_color_multiplier: Some([1.0, 1.0, 0.4, 1.0]),
             hide_mesh: true,
         }

@@ -1,6 +1,7 @@
 use std::time::Duration;
 
 use bevy::{
+    color::palettes,
     diagnostic::{DiagnosticsStore, FrameTimeDiagnosticsPlugin},
     prelude::*,
 };
@@ -70,7 +71,7 @@ fn setup(mut commands: Commands) {
             TextStyle {
                 font: default(),
                 font_size: 20.0,
-                color: Color::TOMATO,
+                color: palettes::css::TOMATO.into(),
             },
         )
         .with_style(Style {
